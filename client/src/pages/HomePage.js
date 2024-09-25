@@ -1,7 +1,9 @@
+// src/pages/HomePage.js
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import axios from 'axios';
+import EventCard from '../components/EventCard';
 
 const HomePage = () => {
   const [events, setEvents] = useState([]);
@@ -13,7 +15,7 @@ const HomePage = () => {
         setEvents(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching events:", error);
+        console.error('Error fetching events:', error);
       });
   }, []);
 
@@ -26,13 +28,7 @@ const HomePage = () => {
         {events.map((event) => (
           <Grid item xs={12} sm={6} md={4} key={event.id}>
             <Link to={`/event/${event.id}`} style={{ textDecoration: 'none' }}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h5">{event.name}</Typography>
-                  <Typography>{event.date}</Typography>
-                  <Typography>{event.venue}</Typography>
-                </CardContent>
-              </Card>
+              <EventCard event={event} />
             </Link>
           </Grid>
         ))}
